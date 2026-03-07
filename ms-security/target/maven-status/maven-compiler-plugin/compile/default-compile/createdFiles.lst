@@ -1,0 +1,7 @@
+com\ms_security\MsSecurityApplication.class
+com\ms_security\SecurityConfig.class
+com\ms_security\model\ServiceResponse.class
+com\ms_security\repository\CardRepository.class
+com\ms_security\service\CardService.class
+com\ms_security\model\Card.class
+com\ms_security\controller\CardController.class
