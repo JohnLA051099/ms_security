@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   ms-security:
     build: ms-security
     mem_limit: 512m
@@ -14,9 +15,10 @@ services:
     restart: always
     depends_on:
       ms_secur:
-          condition: service_healthy
+        condition: service_healthy
+
   ms_secur:
-    image: mysql:8.0.33 
+    image: mysql:8.0.33
     ports:
       - "3307:3306"
     environment:
@@ -25,6 +27,14 @@ services:
       MYSQL_DATABASE: ms-security
     restart: always
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
+
+  angular:
+    build: ng-crud-card
+    ports:
+      - "4200:80"
+    restart: always
+    depends_on:
+      - ms-security
