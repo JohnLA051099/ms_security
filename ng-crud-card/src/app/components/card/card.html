@@ -1,0 +1,106 @@
+<nav class="navbar bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="http://unblast.com/wp-content/uploads/2018/08/Credit-Card-Icons.jpg" alt="Logo" width="280"
+                height="180">
+        </a>
+
+        <div class="col-md-4">
+            <h1>Card Management</h1>
+        </div>
+
+        <img src="https://getbootstrap.com/docs/5.2/assets/brand/bootstrap-logo-shadow.png" alt="Bootstrap" width="115"
+            height="100">
+    </div>
+</nav>
+
+<div class="col-md-12 p-2">
+    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fa fa-save"></i> Nuevo
+    </button>
+
+    <table class="table mt-2 table-bordered">
+    <thead class="table-primary">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Type</th>
+            <th>Cvv</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of listCards(); track item.id_card) {
+            <tr>
+                <td>{{item.id_card}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.number}}</td>
+                <td>{{item.type}}</td>
+                <td>{{item.cvv}}</td>
+                <td>
+                    <button type="button" class="btn btn-warning btn-sm" 
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            (click)="selectItem(item)">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    &nbsp;
+                   <button type="button" class="btn btn-danger btn-sm" (click)="delete(item.id_card)">
+    <i class="fa fa-trash"></i>
+</button>
+                    
+                </td>
+            </tr>
+        } @empty {
+            <tr>
+                <td colspan="6" class="text-center">No hay tarjetas registradas.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 *ngIf="!isUpdate" class="modal-title" id="exampleModalLabel">New Card</h5>
+                <h5 *ngIf="isUpdate" class="modal-title" id="exampleModalLabel">Update Card</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="newCard()"></button>
+            </div>
+            <div class="modal-body">
+            <form [formGroup]="formCard">                   
+                 <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" formControlName="name">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Number</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" formControlName="number">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Type</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" formControlName="type">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">CVV</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" formControlName="cvv">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    style="background-color: #6c757d;">Close</button>
+                <button *ngIf="!isUpdate" type="button" class="btn btn-success" style="background-color: #198754;" (click)="save()">Save</button>
+                <button *ngIf="isUpdate" type="button" class="btn btn-warning" style="background-color: #198754;" (click)="update()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
